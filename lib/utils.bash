@@ -14,11 +14,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if betterleaks is not hosted on GitHub releases.
-if [ -n "${GITHUB_API_TOKEN:-}" ]; then
-	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
-fi
-
 sort_versions() {
 	sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
 		LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
@@ -37,15 +32,27 @@ list_all_versions() {
 }
 
 download_release() {
-	local version filename url
+	local version filename os arch base_url asset_name
 	version="$1"
 	filename="$2"
 
-	# TODO: Adapt the release URL convention for betterleaks
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	case "$(uname -s)" in
+		Linux) os=linux ;;
+		Darwin) os=darwin ;;
+		Windows) os=windows ;;
+		*) echo "betterleaks: unsupported OS '$(uname -s)'" >&2; exit 1 ;;
+	esac
+	case "$(uname -m)" in
+		x86_64 | amd64) arch=x64 ;;
+		arm64 | aarch64) arch=arm64 ;;
+		*) echo "betterleaks: unsupported architecture '$(uname -m)'" >&2; exit 1 ;;
+	esac
+
+	base_url="$GH_REPO/releases/download/v${version}"
+	asset_name="betterleaks_${version}_${os}_${arch}.tar.gz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+	curl "${curl_opts[@]}" -o "$filename" -C - "${base_url}/${asset_name}" || fail "Could not download $url"
 }
 
 install_version() {
