@@ -37,15 +37,22 @@ download_release() {
 	filename="$2"
 
 	case "$(uname -s)" in
-		Linux) os=linux ;;
-		Darwin) os=darwin ;;
-		Windows) os=windows ;;
-		*) echo "betterleaks: unsupported OS '$(uname -s)'" >&2; exit 1 ;;
+	Linux) os=linux ;;
+	Darwin) os=darwin ;;
+	Windows) os=windows ;;
+	*)
+		echo "betterleaks: unsupported OS '$(uname -s)'" >&2
+		exit 1
+		;;
 	esac
+
 	case "$(uname -m)" in
-		x86_64 | amd64) arch=x64 ;;
-		arm64 | aarch64) arch=arm64 ;;
-		*) echo "betterleaks: unsupported architecture '$(uname -m)'" >&2; exit 1 ;;
+	x86_64 | amd64) arch=x64 ;;
+	arm64 | aarch64) arch=arm64 ;;
+	*)
+		echo "betterleaks: unsupported architecture '$(uname -m)'" >&2
+		exit 1
+		;;
 	esac
 
 	base_url="$GH_REPO/releases/download/v${version}"
