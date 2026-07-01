@@ -52,7 +52,7 @@ download_release() {
 	asset_name="betterleaks_${version}_${os}_${arch}.tar.gz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "${base_url}/${asset_name}" || fail "Could not download $url"
+	curl "${curl_opts[@]}" -o "$filename" -C - "${base_url}/${asset_name}" || fail "Could not download ${base_url}/${asset_name}"
 }
 
 install_version() {
