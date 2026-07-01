@@ -2,7 +2,7 @@
 
 # asdf-betterleaks [![Build](https://github.com/panz3r/asdf-betterleaks/actions/workflows/build.yml/badge.svg)](https://github.com/panz3r/asdf-betterleaks/actions/workflows/build.yml) [![Lint](https://github.com/panz3r/asdf-betterleaks/actions/workflows/lint.yml/badge.svg)](https://github.com/panz3r/asdf-betterleaks/actions/workflows/lint.yml)
 
-[betterleaks](https://betterleaks.com/) plugin for the [asdf version manager](https://asdf-vm.com).
+[Betterleaks](https://betterleaks.com/) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
@@ -15,18 +15,13 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
 - `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
 
 # Install
 
 Plugin:
 
 ```shell
-asdf plugin add betterleaks
-# or
 asdf plugin add betterleaks https://github.com/panz3r/asdf-betterleaks.git
 ```
 
@@ -34,13 +29,13 @@ betterleaks:
 
 ```shell
 # Show all installable versions
-asdf list-all betterleaks
+asdf list all betterleaks
 
 # Install specific version
 asdf install betterleaks latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global betterleaks latest
+asdf set -u betterleaks latest
 
 # Now betterleaks commands are available
 betterleaks --help
